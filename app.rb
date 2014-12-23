@@ -58,4 +58,5 @@ end
 
 get '/' do
   erb 'Hello'
+  # don't forget about title
 end

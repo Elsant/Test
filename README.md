@@ -1,4 +1,4 @@
-gTeam test programm!
+gTeam test application!
 
 Install following gems
 

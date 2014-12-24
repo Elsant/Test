@@ -1,0 +1,13 @@
+.signin
+  %h4 Please sign in
+  %br
+  %form{ :action => "/customers/login", :method => "post"}
+    .input-group
+      %span#basic-addon1.input-group-addon Email
+      %input.form-control{:name => "email", "aria-describedby" => "basic-addon1", :placeholder => "Email", :type => "text"}/
+    %br
+    .input-group
+      %span#basic-addon1.input-group-addon Password
+      %input.form-control{:name => "password", "aria-describedby" => "basic-addon1", :placeholder => "Password", :type => "password"}/
+    %br
+    %input.btn.btn-lg.btn-primary.btn-block{ :name => "submit", :type => "submit", :value => "Sign in"}

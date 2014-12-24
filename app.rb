@@ -1,62 +1,62 @@
 require 'rubygems'
 require 'sinatra'
 require 'data_mapper'
-
-
-# DataMapper::Logger.new($stdout, :debug)
-# mysql://user:password@hostname/database
-DataMapper.setup(:default, 'mysql://root:5555@localhost:3306/test')
-
-class Product
-  include DataMapper::Resource
-
-  #all fields required
-  property :id,          Serial 
-  property :name,        String
-  property :price,       Float
-  property :status,      Integer #Enabled disabled 1
-  property :description, String
-  property :created_at,  DateTime
-  property :updated_at,  DateTime
-
-  validates_presence_of :name, :price, :status, :description 
-end
-
-class Customer
-  include DataMapper::Resource
-
-  #all fields required
-  property :id,         Serial 
-  property :firstname,  String
-  property :lastname,   String
-  property :email,      String
-  property :password,   String 
-  property :created_at, DateTime
-  property :updated_at, DateTime
-
-  validates_presence_of :firstname, :lastname, :email, :password
-  validates_format_of :email, :as => :email_address
-  validates_length_of :password, :min => 7
-end
-
-class Order
-  include DataMapper::Resource
-
-  property :id,          Serial
-  property :order_no,    String
-  property :customer_id, Integer
-  property :total,       Float
-  property :date,        Date
-  property :created_at,  DateTime
-  property :updated_at,  DateTime #dont forget timestamps
-end
+require './config/database'
+require './helpers/sinatra'
 
 # Order Lines table(Shopping cart items)
 
-# DataMapper.auto_migrate! # !Dangerous
-# DataMapper.auto_upgrade!
+enable :sessions
+
 
 get '/' do
-  erb 'Hello'
   # don't forget about title
+  @customer = session[:customer]
+  haml :'products/index'
+
 end
+
+get '/customers/signup' do
+  haml :'customers/signup'
+end
+
+post '/customers/signup' do
+  customer = Customer.new
+  
+  customer.firstname = params["firstname"]
+  customer.lastname = params["lastname"]
+  customer.password = params["password"]
+  customer.email = params["email"]
+  if customer.save
+    flash("Customer created")
+    redirect '/'
+  else
+    tmp = []
+    customer.errors.each do |e|
+      tmp << (e.join("<br/>"))
+    end
+    flash(tmp)
+    redirect '/customers/signup'
+  end
+end
+
+get '/customers/login' do
+  haml :'customers/login'
+end
+
+post '/customers/login' do
+  if session[:customer] = Customer.authenticate(params["email"], params["password"])
+    flash("Login successful")
+    redirect '/'
+  else
+    flash("Login failed - Check email and password")
+    redirect '/customers/login'
+  end
+end
+
+get '/customers/logout' do
+  session[:customer] = nil
+  flash("Logout successful")
+  redirect '/'
+end
+

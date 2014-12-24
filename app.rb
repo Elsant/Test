@@ -26,18 +26,18 @@ get '/customers/signup' do
 end
 
 post '/customers/signup' do
-  customer = Customer.new
+  @customer = Customer.new
   
-  customer.firstname = params["firstname"]
-  customer.lastname = params["lastname"]
-  customer.password = params["password"]
-  customer.email = params["email"]
-  if customer.save
+  @customer.firstname = params["firstname"]
+  @customer.lastname = params["lastname"]
+  @customer.password = params["password"]
+  @customer.email = params["email"]
+  if @customer.save
     flash("Customer created")
     redirect '/'
   else
     tmp = []
-    customer.errors.each do |e|
+    @customer.errors.each do |e|
       tmp << (e.join("<br/>"))
     end
     flash(tmp)
@@ -74,18 +74,18 @@ get '/products/new' do
 end
 
 post '/products' do
-  product = Product.new
+  @product = Product.new
  
-  product.name = params["name"]
-  product.description = params["description"]
-  product.status = params["status"].to_i
-  product.price = params["price"].to_f
-  if product.save
+  @product.name = params["name"]
+  @product.description = params["description"]
+  @product.status = params["status"].to_i
+  @product.price = params["price"].to_f
+  if @product.save
     flash("Product created")
     redirect '/products'
   else
     tmp = []
-    product.errors.each do |e|
+    @product.errors.each do |e|
       tmp << (e.join("<br/>"))
     end
     flash(tmp)
@@ -102,6 +102,33 @@ end
 get '/products/:id' do
   @product = Product.get(params[:id])
   haml :'products/show'
+end
+
+get '/products/:id/edit' do
+  @product = Product.get(params[:id])
+  haml :'products/edit'
+end
+
+put '/products/:id' do
+  @product = Product.get(params[:id])
+  puts "********************"
+  puts params.inspect
+  
+  @product.name = params["name"]
+  @product.description = params["description"]
+  @product.status = params["status"].to_i
+  @product.price = params["price"].to_f
+  if @product.save
+    flash("Product updated")
+    redirect '/products/"#{@product.id}"'
+  else
+    tmp = []
+    @product.errors.each do |e|
+      tmp << (e.join("<br/>"))
+    end
+    flash(tmp)
+    redirect '/products/"#{@product.id}"/edit'
+  end
 end
 
 delete '/products/:id' do

@@ -18,11 +18,11 @@
           %td= product.description
           %td= product.price
           %td.buy
-            %button.btn.btn-success{:type => "button"} Buy
+            %a.btn.btn-success{:type => "button"} Buy
           %td.last
             .btn-group{"aria-label" => "...", :role => "group"}
               %a.btn.btn-info{:type => "button", href: "products/#{product.id}", method: :get} Show
-              %button.btn.btn-warning{:type => "button"} Edit
+              %a.btn.btn-warning{:type => "button", href: "products/#{product.id}/edit", method: :get} Edit
               
 
           -#

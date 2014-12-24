@@ -20,11 +20,11 @@ td.buy {
   text-align: center;
 }
 
-button.btn {
+.last a.btn {
   width: 75px;
 }
  
-td.buy button {
+td.buy a {
   width: 110px;
 }
 div.checkbox.product-status {

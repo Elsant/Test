@@ -12,6 +12,6 @@ class Product
   property :description, String
   property :created_at,  DateTime, :default => DateTime.now
   property :updated_at,  DateTime, :default => DateTime.now
-
+  
   validates_presence_of :name, :price, :description 
 end

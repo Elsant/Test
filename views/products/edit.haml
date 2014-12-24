@@ -1,0 +1,25 @@
+.panel.panel-info
+  .panel-heading Edit Product
+  %br
+  %form{ :action => "/products/#{@product.id}",  :method => "put"}
+
+    .input-group
+      %span#basic-addon1.input-group-addon Name
+      %input.form-control{:name => "name", "aria-describedby" => "basic-addon1", value: "#{@product.name}", :placeholder => "Name", :type => "text"}
+    %br
+    .input-group
+      %span#basic-addon2.input-group-addon Description
+      %input.form-control{:name => "description", rows: 3, "aria-describedby" => "basic-addon1", value: "#{@product.description}", :placeholder => "Description", :type => "text"}
+    %br
+    .input-group
+      %span#basic-addon3-prenabled.input-group-addon Status
+      .input.product-status.form-control
+        %label
+          %input{:type => 'hidden', :name => 'status', :value => "#{@product.status}"}
+          %input{:name => "status", value: "1", :type => "checkbox"} Enabled 
+    %br
+    .input-group
+      %span#basic-addon4.input-group-addon Price
+      %input.form-control{:name => "price", "aria-describedby" => "basic-addon1", value: "#{@product.price}", :placeholder => "Price", :type => "text"}
+    %br
+    %a.btn.btn-lg.btn-info{ :name => "submit", :type => "submit",  :method => "put", :value => "Update Product"}

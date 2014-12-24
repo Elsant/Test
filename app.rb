@@ -7,14 +7,19 @@ require './helpers/sinatra'
 # Order Lines table(Shopping cart items)
 
 enable :sessions
+before do
+  @customer = session[:customer]
+end
 
 
 get '/' do
   # don't forget about title
-  @customer = session[:customer]
-  haml :'products/index'
+  redirect :'products'
 
 end
+
+
+# **** Customers ******
 
 get '/customers/signup' do
   haml :'customers/signup'
@@ -58,5 +63,50 @@ get '/customers/logout' do
   session[:customer] = nil
   flash("Logout successful")
   redirect '/'
+end
+
+# ****  End of Customers ******
+
+# **** Products ******
+
+get '/products/new' do
+  haml :'products/new'
+end
+
+post '/products' do
+  product = Product.new
+ 
+  product.name = params["name"]
+  product.description = params["description"]
+  product.status = params["status"].to_i
+  product.price = params["price"].to_f
+  if product.save
+    flash("Product created")
+    redirect '/products'
+  else
+    tmp = []
+    product.errors.each do |e|
+      tmp << (e.join("<br/>"))
+    end
+    flash(tmp)
+    redirect '/products/new'
+  end
+end
+
+get '/products' do
+  @products = Product.all
+  haml :'products/index'
+end
+
+
+get '/products/:id' do
+  @product = Product.get(params[:id])
+  haml :'products/show'
+end
+
+delete '/products/:id' do
+  @product = Product.get(params[:id])
+  @product.destroy
+  redirect '/products'
 end
 

@@ -1,1 +1,32 @@
-%p Hello
+.panel.panel-info
+  .panel-heading Products
+
+  %table.table
+    %thead
+      %tr
+        %th Name
+        %th Status
+        %th Description
+        %th Price
+        %th
+        %th
+    %tbody
+      - @products.each do |product|
+        %tr
+          %td= product.name
+          %td= product_status(product.status)
+          %td= product.description
+          %td= product.price
+          %td.buy
+            %button.btn.btn-success{:type => "button"} Buy
+          %td.last
+            .btn-group{"aria-label" => "...", :role => "group"}
+              %a.btn.btn-info{:type => "button", href: "products/#{product.id}", method: :get} Show
+              %button.btn.btn-warning{:type => "button"} Edit
+              
+
+          -#
+            %button.btn.btn-danger{:type => "button",  data: {url: "products/#{product.id}", method: :delete}} Delete
+            %a.btn.btn-info{:type => "button", href: "products/#{product.id}", method: :get} Show
+%br/
+%a.btn.btn-info{:type => "button", href: "/products/new", method: :get} Add Product

@@ -1,0 +1,15 @@
+.panel.panel-info
+  .panel-heading= @product.name
+
+  %table.table
+    %thead
+      %tr
+        %th Description
+        %th Price
+        %th Status
+    %tbody
+      %tr
+        %td= @product.description
+        %td= @product.price
+        %td= product_status(@product.status)
+%a.btn.btn-info{:type => "button", href: "/", method: :get} Back to products

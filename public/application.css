@@ -13,3 +13,21 @@ span.input-group-addon {
 .navbar-default .navbar-brand {
   color: #337ab7;
 }
+td.last {
+  width: 260px;
+}
+td.buy {
+  text-align: center;
+}
+
+button.btn {
+  width: 75px;
+}
+ 
+td.buy button {
+  width: 110px;
+}
+div.checkbox.product-status {
+  padding-left: 10px;
+  margin-top: 0px;
+}

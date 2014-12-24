@@ -36,4 +36,8 @@ helpers do
     nil
   end
 
+  def product_status(product_status)
+    product_status == 0 ? "Disabled" : "Enabled"
+  end
+
 end

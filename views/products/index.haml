@@ -18,9 +18,10 @@
           %td= product.description
           %td= product.price
           %td.buy
-            %form{ :action => "/lineitems", method: :post}
-              %input{:type => 'hidden', :name => 'product_id', :value => product.id}
-              %input.btn.btn-success{:name => "submit", :type => "submit", :value => "Buy"}
+            -if @customer && product.status == 1
+              %form{ :action => "/lineitems", method: :post}
+                %input{:type => 'hidden', :name => 'product_id', :value => product.id}
+                %input.btn.btn-success{:name => "submit", :type => "submit", :value => "Buy"}
           %td.last
             .btn-group{"aria-label" => "...", :role => "group"}
               %a.btn.btn-info{:type => "button", href: "products/#{product.id}", method: :get} Show

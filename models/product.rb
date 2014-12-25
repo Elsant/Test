@@ -7,7 +7,7 @@ class Product
   #all fields required
   property :id,          Serial 
   property :name,        String
-  property :price,       Float
+  property :price,       Float, precision: 2
   property :status,      Integer, default: 0
   property :description, String
   property :created_at,  DateTime, default: DateTime.now

@@ -63,6 +63,8 @@ end
 
 get '/customers/logout' do
   session[:customer] = nil
+  # Don't saves products in shopping cart
+  session[:order_id] = nil 
   flash("Logout successful")
   redirect '/'
 end
@@ -146,49 +148,32 @@ end
 # ****  Line Items ******
 
 post '/lineitems' do
+
   @order = current_order
-  puts "Order"
-  puts @order.inspect
-  puts @order.class
 
-  puts "LineItems"
-  puts @order.line_items.inspect
-  puts "Params"
-  puts params.inspect
+  unless @order.order_no
+    order_no = (@customer.firstname[0] + @customer.lastname[0]).upcase
+    order_no += @order.id.to_s.rjust(8, '0')
+    @order.order_no = order_no
+  end
   product = Product.get(params[:product_id])
-
-
   @line_item = @order.add_product(product.id)
+  @line_item.unit_price = product.price
+  @line_item.total_price = @line_item.unit_price * @line_item.qty
 
-  
-  
+  puts "***** BEFORE SAVE *****"
+  puts @order.inspect
+  puts @line_item
+  puts session[:order_id]
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  # @line_item.unit_price = product.price
-  # @line_item.total_price = @line_item.unit_price * @line_item.qty
-  # @order.total = @order.line_items.sum(:total_price)
-
-  if @order.save
-    flash("Product created")
+  if @line_item.save
+    @order.total = @order.line_items.sum(:total_price)
+    @order.save
+    flash("Product  - #{product.name} - added fo Order #{@order.order_no}")
     redirect '/products'
   else
     tmp = []
-    @order.errors.each do |e|
+    @line_item.errors.each do |e|
       tmp << (e.join("<br/>"))
     end
     flash(tmp)

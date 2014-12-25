@@ -1,6 +1,5 @@
 require 'dm-validations'
 require 'date'
-# require './models/line_item'
 
 class Product
   include DataMapper::Resource

@@ -2,8 +2,6 @@ require './helpers/helpers'
 require 'digest/sha1'
 require 'dm-validations'
 require 'date'
-# require './models/order'
-
 
 class Customer
   include DataMapper::Resource

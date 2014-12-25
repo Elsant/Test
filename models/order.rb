@@ -1,13 +1,11 @@
 require 'dm-validations'
 require 'date'
-require './models/line_item'
 
 class Order
   include DataMapper::Resource
 
   property :id,          Serial
   property :order_no,    String
-  # property :customer_id, Integer
   property :total,       Float
   property :date,        Date
   property :created_at,  DateTime, :default => DateTime.now

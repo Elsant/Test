@@ -16,6 +16,7 @@ class Product
   
   validates_presence_of :name, :price, :description 
 
+  has n, :line_items
   has n, :orders, :through => :line_items
 
 end

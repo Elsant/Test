@@ -7,7 +7,7 @@ class Order
 
   property :id,          Serial
   property :order_no,    String
-  property :customer_id, Integer
+  # property :customer_id, Integer
   property :total,       Float
   property :date,        Date
   property :created_at,  DateTime, :default => DateTime.now
@@ -15,5 +15,6 @@ class Order
 
   belongs_to :customer, :key => true
 
+  has n, :line_items
   has n, :products, :through => :line_items
 end

@@ -42,13 +42,6 @@ helpers do
 
   def current_order
     order = Order.first(:id => session[:order_id]) if session[:order_id]
-
-    puts "*** From Helper***"
-    puts "order"
-    puts order.inspect
-    puts "session"
-    puts session[:order_id]
-
     if order
       order 
     else
@@ -56,9 +49,6 @@ helpers do
       order.customer_id = @customer.id
       order.save
       session[:order_id] = order.id
-      puts "*** From Helper Else - order nil***"
-      puts order.inspect
-      puts session[:order_id]
       order
     end
   end

@@ -185,3 +185,20 @@ end
 # ****  End of Line Items ******
 
 # ****  Orders ******
+get '/orders' do
+  @orders = Order.all(:customer_id => @customer.id, :order => [ :created_at.desc ])
+  haml :'orders/index'
+end
+
+get '/orders/:id' do
+  @order = Order.first(:id => params[:id])
+  @line_items = @order.line_items
+  haml :'orders/show'
+end
+
+get '/orders/:id/payment' do
+  @order = Order.first(:id => params[:id])
+  @order.date = Date.today
+  haml :'orders/payment'
+end
+# ****  End of Orders ******

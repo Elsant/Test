@@ -1,0 +1,20 @@
+.panel.panel-info
+  .panel-heading Orders
+
+  %table.table
+    %thead
+      %tr
+        %th Order
+        %th Total
+        %th
+        %th
+    %tbody
+      - @orders.each do |order|
+        %tr
+          %td= order.order_no
+          %td= order.total
+          %td.buy
+            %a.btn.btn-success{:type => "button", href: "orders/#{order.id}/payment", method: :get} Pay
+          %td.last
+            %a.btn.btn-info{:type => "button", href: "orders/#{order.id}", method: :get} Show
+

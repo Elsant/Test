@@ -109,11 +109,10 @@ get '/products/:id/edit' do
   haml :'products/edit'
 end
 
+# must be put '/products/:id'
 post '/products/:id/update' do
   @product = Product.get(params[:id])
-  puts "********************"
-  puts params.inspect
-  
+
   @product.name = params["name"]
   @product.description = params["description"]
   @product.status = params["status"].to_i
@@ -131,9 +130,14 @@ post '/products/:id/update' do
   end
 end
 
+# must be delete '/products/:id'
+# maybe must been destroyed if logged_in? or admin?
 get '/products/:id/delete' do
   @product = Product.get(params[:id])
   @product.destroy
   redirect '/products'
 end
 
+# ****  End of Products ******
+
+# ****  Orders ******

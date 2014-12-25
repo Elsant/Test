@@ -18,7 +18,9 @@
           %td= product.description
           %td= product.price
           %td.buy
-            %a.btn.btn-success{:type => "button"} Buy
+            %form{ :action => "/lineitems", method: :post}
+              %input{:type => 'hidden', :name => 'product_id', :value => product.id}
+              %input.btn.btn-success{:name => "submit", :type => "submit", :value => "Buy"}
           %td.last
             .btn-group{"aria-label" => "...", :role => "group"}
               %a.btn.btn-info{:type => "button", href: "products/#{product.id}", method: :get} Show

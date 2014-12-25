@@ -40,4 +40,20 @@ helpers do
     product_status == 0 ? "Disabled" : "Enabled"
   end
 
+  def current_order
+    id = session[:order_id]
+
+    puts "************ id"
+    puts id.class
+    order = Order.get(:id, id)
+    puts "************ order"
+    puts order.inspect
+    return order unless order.nil?
+    order = Order.create
+    order.customer_id = @customer.id
+    order.save
+    session[:order_id] = order.id
+    order
+  end
+
 end

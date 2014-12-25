@@ -3,13 +3,18 @@ require 'sinatra'
 require 'data_mapper'
 require './config/database'
 require './helpers/sinatra'
-
+require './models/customer'
+require './models/product'
+require './models/order'
+require './models/line_item'
 
 enable :sessions
 
 before do
   @customer = session[:customer]
 end
+
+DataMapper.finalize 
 
 get '/' do
   redirect :'products'
@@ -136,5 +141,62 @@ get '/products/:id/delete' do
 end
 
 # ****  End of Products ******
+
+
+# ****  Line Items ******
+
+post '/lineitems' do
+  @order = current_order
+  puts "Order"
+  puts @order.inspect
+  puts @order.class
+
+  puts "LineItems"
+  puts @order.line_items.inspect
+  puts "Params"
+  puts params.inspect
+  product = Product.get(params[:product_id])
+
+
+  @line_item = @order.add_product(product.id)
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  # @line_item.unit_price = product.price
+  # @line_item.total_price = @line_item.unit_price * @line_item.qty
+  # @order.total = @order.line_items.sum(:total_price)
+
+  if @order.save
+    flash("Product created")
+    redirect '/products'
+  else
+    tmp = []
+    @order.errors.each do |e|
+      tmp << (e.join("<br/>"))
+    end
+    flash(tmp)
+    redirect '/products'
+  end
+
+end
+
+# ****  End of Line Items ******
 
 # ****  Orders ******

@@ -10,10 +10,10 @@ class Customer
   property :id,               Serial 
   property :firstname,        String
   property :lastname,         String
-  property :email,            String #, :key => true
+  property :email,            String 
   property :hashed_password,  String
   property :salt,             String 
-  property :created_at,       DateTime,  :default => DateTime.now
+  property :created_at,       DateTime,  default: DateTime.now
 
   attr_accessor :password
 

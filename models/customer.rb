@@ -2,6 +2,8 @@ require './helpers/helpers'
 require 'digest/sha1'
 require 'dm-validations'
 require 'date'
+# require './models/order'
+
 
 class Customer
   include DataMapper::Resource
@@ -10,7 +12,7 @@ class Customer
   property :id,               Serial 
   property :firstname,        String
   property :lastname,         String
-  property :email,            String, :key => true
+  property :email,            String #, :key => true
   property :hashed_password,  String
   property :salt,             String 
   property :created_at,       DateTime,  :default => DateTime.now
@@ -20,6 +22,8 @@ class Customer
   validates_presence_of :firstname, :lastname, :email, :password
   validates_format_of :email, :as => :email_address
   validates_length_of :password, :min => 7
+
+  has n, :orders
 
   def password=(pass)
     @password = pass

@@ -2,6 +2,7 @@ require 'dm-core'
 require './models/customer'
 require './models/product'
 require './models/order'
+require './models/line_item'
 
 # DataMapper.setup(:default, "sqlite3:///#{Dir.pwd}/test.db")
 # DataMapper::Logger.new($stdout, :debug)

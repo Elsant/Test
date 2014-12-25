@@ -1,5 +1,6 @@
 require 'dm-validations'
 require 'date'
+# require './models/line_item'
 
 class Product
   include DataMapper::Resource
@@ -14,4 +15,7 @@ class Product
   property :updated_at,  DateTime, :default => DateTime.now
   
   validates_presence_of :name, :price, :description 
+
+  has n, :orders, :through => :line_items
+
 end

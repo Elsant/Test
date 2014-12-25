@@ -4,18 +4,15 @@ require 'data_mapper'
 require './config/database'
 require './helpers/sinatra'
 
-# Order Lines table(Shopping cart items)
 
 enable :sessions
+
 before do
   @customer = session[:customer]
 end
 
-
 get '/' do
-  # don't forget about title
   redirect :'products'
-
 end
 
 

@@ -109,7 +109,7 @@ get '/products/:id/edit' do
   haml :'products/edit'
 end
 
-put '/products/:id' do
+post '/products/:id/update' do
   @product = Product.get(params[:id])
   puts "********************"
   puts params.inspect
@@ -120,7 +120,7 @@ put '/products/:id' do
   @product.price = params["price"].to_f
   if @product.save
     flash("Product updated")
-    redirect '/products/"#{@product.id}"'
+    redirect "/products/#{@product.id}"
   else
     tmp = []
     @product.errors.each do |e|
@@ -131,7 +131,7 @@ put '/products/:id' do
   end
 end
 
-delete '/products/:id' do
+get '/products/:id/delete' do
   @product = Product.get(params[:id])
   @product.destroy
   redirect '/products'

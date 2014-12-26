@@ -161,11 +161,6 @@ post '/lineitems' do
   @line_item.unit_price = product.price
   @line_item.total_price = @line_item.unit_price * @line_item.qty
 
-  puts "***** BEFORE SAVE *****"
-  puts @order.inspect
-  puts @line_item
-  puts session[:order_id]
-
   if @line_item.save
     @order.total = @order.line_items.sum(:total_price)
     @order.save

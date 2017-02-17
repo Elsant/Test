@@ -20,7 +20,6 @@ get '/' do
   redirect :'products'
 end
 
-
 # **** Customers ******
 
 get '/customers/signup' do
